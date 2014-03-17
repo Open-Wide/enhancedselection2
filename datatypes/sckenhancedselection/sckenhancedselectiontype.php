@@ -869,19 +869,14 @@ class SckEnhancedSelectionType extends eZDataType
     function isDbQueryValid( $sql )
     {
         $db = eZDB::instance();
-        $isValid = false;
 
         $res = $db->arrayQuery( $sql, array( 'limit' => 1 ) );
-
-        if( is_array( $res ) and count( $res ) == 1 )
+        if( $db->ErrorNumber == 0 )
         {
-            if( isset( $res[0]['name'] ) and isset( $res[0]['identifier'] ) )
-            {
-                $isValid = true;
-            }
+            return true;
         }
 
-        return $isValid;
+        return false;
     }
 
     function getDbOptions( $classContent )
