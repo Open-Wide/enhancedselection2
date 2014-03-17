@@ -76,18 +76,18 @@
     
     <div class="block">
         <input type="submit"
-               class="button"
+               class="button btn"
                value="{'New option'|i18n($i18n_context)}"
                name="CustomActionButton[{$id}_new_option]" />
                
         <input type="submit"
-               {section show=count($content.options)|gt(0)}class="button"{section-else}disabled="disabled"{/section}
+               {section show=count($content.options)|gt(0)}class="button btn"{section-else}class="btn" disabled="disabled"{/section}
                value="{'Remove selected option(s)'|i18n($i18n_context)}"
                name="CustomActionButton[{$id}_remove_optionlist]" />
                
         {* Sorting 1 option doesn't make sense *}
         <input type="submit"
-               {section show=count($content.options)|gt(1)}class="button"{section-else}disabled="disabled"{/section}
+               {section show=count($content.options)|gt(1)}class="button btn"{section-else}class="btn" disabled="disabled"{/section}
                value="{'Sort options'|i18n($i18n_context)}"
                name="CustomActionButton[{$id}_sort_optionlist]" />
                
@@ -123,6 +123,7 @@
     <label>{"Database query"|i18n($i18n_context)}:</label>
     <textarea rows="5"
               cols="80"
+			  class="box"
               name="ContentClass_sckenhancedselection_query_{$id}">{$content.query|wash}</textarea>
 </div>       
 
