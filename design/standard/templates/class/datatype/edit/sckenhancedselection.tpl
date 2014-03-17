@@ -1,7 +1,7 @@
 {let id=$class_attribute.id
      content=$class_attribute.content
      i18n_context="extension/sckenhancedselection/class/edit"}
-     
+<div class="block">   
 <fieldset>
     <legend>{"Option list"|i18n($i18n_context)}</legend>
     
@@ -99,7 +99,7 @@
         </select>
     </div>
 </fieldset>
-
+</div>
 <div class="block">
     <div class="element">
         <label>{"Multiple choice"|i18n($i18n_context)}:</label>
@@ -125,5 +125,5 @@
               cols="80"
               name="ContentClass_sckenhancedselection_query_{$id}">{$content.query|wash}</textarea>
 </div>       
-     
+
 {/let}     
