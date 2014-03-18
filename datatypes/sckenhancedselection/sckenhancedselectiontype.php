@@ -33,7 +33,7 @@ class SckEnhancedSelectionType extends eZDataType {
 	const CLASS_STORAGE_XML = 'data_text5';
 
 	function SckEnhancedSelectionType() {
-		$this->eZDataType( self::DATATYPESTRING, ezpi18n::tr( 'extension/sckenhancedselection/datatypes', 'Enhanced Selection 2', 'Datatype name' ), array(
+		$this->eZDataType( self::DATATYPESTRING, ezpI18n::tr( 'extension/sckenhancedselection/datatypes', 'Enhanced Selection 2', 'Datatype name' ), array(
 			'serialize_supported' => true,
 			'object_serialize_map' => array( 'data_text' => 'selection' )
 				)
@@ -805,7 +805,7 @@ class SckEnhancedSelectionType extends eZDataType {
 				switch ( true ) {
 					case $isRequired === true and count( $selection ) == 0:
 					case $isRequired === true and count( $selection ) == 1 and empty( $selection[0] ): {
-							$contentObjectAttribute->setValidationError( ezpi18n::tr( 'extension/sckenhancedselection/datatypes', 'This is a required field.' )
+							$contentObjectAttribute->setValidationError( ezpI18n::tr( 'extension/sckenhancedselection/datatypes', 'This is a required field.' )
 							);
 							return eZInputValidator::STATE_INVALID;
 						} break;
@@ -813,10 +813,10 @@ class SckEnhancedSelectionType extends eZDataType {
 			}
 		} else {
 			if ( $infoCollectionCheck === true and $isRequired === true and $classContent['is_multiselect'] == 1 ) {
-				$contentObjectAttribute->setValidationError( ezpi18n::tr( 'extension/sckenhancedselection/datatypes', 'This is a required field.' )
+				$contentObjectAttribute->setValidationError( ezpI18n::tr( 'extension/sckenhancedselection/datatypes', 'This is a required field.' )
 				);
 			} else if ( $infoCollectionCheck === true and $isRequired === true ) {
-				$contentObjectAttribute->setValidationError( ezpi18n::tr( 'extension/sckenhancedselection/datatypes', 'No POST variable. Please check your configuration.' )
+				$contentObjectAttribute->setValidationError( ezpI18n::tr( 'extension/sckenhancedselection/datatypes', 'No POST variable. Please check your configuration.' )
 				);
 			} else {
 				return eZInputValidator::STATE_ACCEPTED;
