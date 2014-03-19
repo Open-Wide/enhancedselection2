@@ -31,13 +31,16 @@ class SckEnhancedSelectionType extends eZDataType {
 
 	const DATATYPESTRING = 'sckenhancedselection';
 	const CLASS_STORAGE_XML = 'data_text5';
+	protected $defaultDelimiter;
 
 	function SckEnhancedSelectionType() {
-		$this->eZDataType( self::DATATYPESTRING, ezpI18n::tr( 'extension/sckenhancedselection/datatypes', 'Enhanced Selection 2', 'Datatype name' ), array(
+		$this->eZDataType( self::DATATYPESTRING, ezpi18n::tr( 'extension/sckenhancedselection/datatypes', 'Enhanced Selection 2', 'Datatype name' ), array(
 			'serialize_supported' => true,
 			'object_serialize_map' => array( 'data_text' => 'selection' )
 				)
 		);
+        $INI = eZINI::instance( 'enhancedselection2.ini' );
+        $this->defaultDelimiter = $INI->variable('Enhancedselection2Settings', 'DefaultDelimiter');
 	}
 
 	/*	 * ******
@@ -401,7 +404,7 @@ class SckEnhancedSelectionType extends eZDataType {
 		$delimiter = $classContent['delimiter'];
 
 		if ( empty( $delimiter ) ) {
-			$delimiter = ', ';
+			$delimiter = $this->defaultDelimiter;
 		}
 
 		$dataText = join( $delimiter, $nameArray );
@@ -476,7 +479,7 @@ class SckEnhancedSelectionType extends eZDataType {
 			$delimiter = $classContent['delimiter'];
 
 			if ( empty( $delimiter ) ) {
-				$delimiter = ", ";
+				$delimiter = $this->defaultDelimiter;
 			}
 
 			$titleString = join( $delimiter, $titleArray );
@@ -805,7 +808,7 @@ class SckEnhancedSelectionType extends eZDataType {
 				switch ( true ) {
 					case $isRequired === true and count( $selection ) == 0:
 					case $isRequired === true and count( $selection ) == 1 and empty( $selection[0] ): {
-							$contentObjectAttribute->setValidationError( ezpI18n::tr( 'extension/sckenhancedselection/datatypes', 'This is a required field.' )
+							$contentObjectAttribute->setValidationError( ezpi18n::tr( 'extension/sckenhancedselection/datatypes', 'This is a required field.' )
 							);
 							return eZInputValidator::STATE_INVALID;
 						} break;
@@ -813,10 +816,10 @@ class SckEnhancedSelectionType extends eZDataType {
 			}
 		} else {
 			if ( $infoCollectionCheck === true and $isRequired === true and $classContent['is_multiselect'] == 1 ) {
-				$contentObjectAttribute->setValidationError( ezpI18n::tr( 'extension/sckenhancedselection/datatypes', 'This is a required field.' )
+				$contentObjectAttribute->setValidationError( ezpi18n::tr( 'extension/sckenhancedselection/datatypes', 'This is a required field.' )
 				);
 			} else if ( $infoCollectionCheck === true and $isRequired === true ) {
-				$contentObjectAttribute->setValidationError( ezpI18n::tr( 'extension/sckenhancedselection/datatypes', 'No POST variable. Please check your configuration.' )
+				$contentObjectAttribute->setValidationError( ezpi18n::tr( 'extension/sckenhancedselection/datatypes', 'No POST variable. Please check your configuration.' )
 				);
 			} else {
 				return eZInputValidator::STATE_ACCEPTED;
@@ -827,6 +830,28 @@ class SckEnhancedSelectionType extends eZDataType {
 
 		return eZInputValidator::STATE_ACCEPTED;
 	}
+
+    function fromString($objectAttribute, $string) {
+        $classContent = $objectAttribute->classContent();
+        $delimiter = $classContent['delimiter'];
+        if ( empty( $delimiter ) ) {
+            $delimiter = $this->defaultDelimiter;
+        }
+
+        $content = explode( $delimiter, $string );
+        $objectAttribute->setContent( $content );
+    }
+
+    function toString($objectAttribute) {
+        $classContent = $objectAttribute->classContent();
+        $delimiter = $classContent['delimiter'];
+
+        if ( empty( $delimiter ) ) {
+            $delimiter = $this->defaultDelimiter;
+        }
+        $array = $objectAttribute->content();
+        return implode( $delimiter, $array );
+    }
 
 }
 
